@@ -27,6 +27,7 @@ import py2exe
  #         uac_info="highestAvailable")
 t4 = dict(script="BYDTool.pyw",
           dest_base="BYDTool",
+          icon_resource=[(1, "TabletDMI.ico")],
           uac_info="requireAdministrator")
 #console = [t1, t2, t3, t4]
 console = [t4]
@@ -38,15 +39,43 @@ windows = [t4.copy()]
 for t in windows:
     t['dest_base'] += "_w"
 
-setup(
-    version = "0.1.0",
-    description = "py2exe user-access-control BYDTool script",
-    name = "py2exe BYDTool",
-    # targets to build
-    windows = windows,
-#    windows = ["rkdll.pyw"],
-    #console = ["rkdll.pyw"]
+#setup(
+#    version = "0.1.0",
+#    description = "py2exe user-access-control BYDTool script",
+#    name = "py2exe BYDTool",
+#    # targets to build
+#    windows = windows,
+##    windows = ["rkdll.pyw"],
+#    #console = ["rkdll.pyw"]
+#    console = console,
+##    options = { "py2exe": { "dll_excludes": ["MSVCP90.dll"] } }
+#    options = { "py2exe": { "dll_excludes": ["MSVCP90.dll"], "includes": ["sip"] } }
+#    )
+
+
+#includes = ["encodings", "encodings.*"]
+includes = ["encodings", "encodings.*", "sip"]
+
+options = {"py2exe":
+
+    {"compressed": 1,
+     "optimize": 2,
+     "ascii": 1,
+     "includes":includes,
+     "bundle_files": 1,
+     "dll_excludes": ["MSVCP90.dll"],
+     }
+    }
+setup(     
+    options = options,      
+    zipfile=None,   #not create library.zip
+#    console=[{"script": "hello.py", "icon_resources": [(1, "hello.ico")] }]
+#    console = [{"script": "BYDTool.pyw",
+#                "dest_base": "BYDTool",
+#                "uac_info": "requireAdministrator",
+#                "icon_resource": [(1, "TabletDMI.ico")]}]
     console = console,
-#    options = { "py2exe": { "dll_excludes": ["MSVCP90.dll"] } }
-    options = { "py2exe": { "dll_excludes": ["MSVCP90.dll"], "includes": ["sip"] } }
+    windows = windows,  
     )
+           
+
